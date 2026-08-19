@@ -1,0 +1,8 @@
+#environment variables file
+.env
+#database
+*.db 
+#virtual environment
+myvenv/
+#pyhton cache
+__pycache__/
