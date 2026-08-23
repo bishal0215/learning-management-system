@@ -15,6 +15,6 @@ def init_admin():
             )
             db.add(default_admin)
             db.commit()
-            print("--- Default Admin Created (username: admin, password: admin1234) ---")
+            print("--- Default Admin Created (username: admin, password: admin12345) ---")
     finally:
         db.close()
