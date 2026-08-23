@@ -1,30 +1,8 @@
-#======backend======
-
 #environment variables file
-backend/.env
+.env
 #database
-backend/*.db 
+*.db 
 #virtual environment
-backend/venv/
+myvenv/
 #pyhton cache
-backend/__pycache__/
-
-
-
-# Frontend - Node/Vite
-frontend/node_modules/
-frontend/dist/
-
-# Frontend environment files
-frontend/.env
-frontend/.env.local
-frontend/.env.*.local
-
-# IDE
-.vscode/
-
-
-#project snapshot
-PROJECT_SNAPSHOT.md
-
-
+__pycache__/
