@@ -16,6 +16,9 @@ def get_current_user(token: str= Depends(oauth2_scheme),db:Session=Depends(datab
 
     try:
         payload= jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+        if payload.get("type") != "access":
+            raise credentials_exception
+        
         user_id: str = payload.get("user_id")
         if user_id is None:
             raise credentials_exception
