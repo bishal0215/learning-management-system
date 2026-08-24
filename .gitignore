@@ -6,3 +6,11 @@
 myvenv/
 #pyhton cache
 __pycache__/
+
+#frontend
+frontend/node_modules/
+frontend/dict/
+
+frontend/.env.local
+frontend/.env.*.local
+frontend/.env
