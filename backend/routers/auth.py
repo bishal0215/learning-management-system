@@ -14,6 +14,7 @@ router = APIRouter(
     prefix = "/auth",
     tags = ["Authentications"]
 )
+
 @router.get("/me", response_model=schemas.UserResponseSchema)
 def get_my_profile(current_user: models.DBUser = Depends(oauth2.get_current_user)):
     return current_user

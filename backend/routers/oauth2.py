@@ -28,3 +28,11 @@ def get_current_user(token: str= Depends(oauth2_scheme),db:Session=Depends(datab
     if user is None:
         raise credentials_exception
     return user
+
+def require_admin(current_user:models.DBUser = Depends(get_current_user)):
+    if not current_user.is_superuser:
+        raise HTTPException(
+            status_code = status.HTTP_403_FORBIDDEN,
+            details = "Admin access required ",
+        )
+    return current_user
