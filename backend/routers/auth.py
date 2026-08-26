@@ -18,15 +18,20 @@ router = APIRouter(
 @router.get("/me", response_model=schemas.UserResponseSchema)
 def get_my_profile(current_user: models.DBUser = Depends(oauth2.get_current_user)):
     return current_user
+
 #get all users 
 @router.get("/users",response_model= List[schemas.UserResponseSchema])
-def get_all_users(db: Session = Depends(database.get_db)):
+def get_all_users(
+    db: Session = Depends(database.get_db),
+    current_user: models.DBUser = Depends(oauth2.require_admin),
+):
     users = db.query(models.DBUser).all()
     return users
 
 #get all users by id 
 @router.get("/{user_id}")
-def get_user_by_id(user_id : int ,db:Session= Depends(database.get_db)):
+def get_user_by_id(user_id : int ,db:Session= Depends(database.get_db), current_user: models.DBUser = Depends(oauth2.get_current_user),
+):
     user = db.query(models.DBUser).filter(models.DBUser.id==user_id).first()
     if not user:
         raise HTTPException(
@@ -79,7 +84,7 @@ def login(
             detail="Invalid Credentials"
         )
     access_token = utils.create_access_token(data={"user_id":user.id})
-    refresh_token = utils.create_access_token(data= {"user_id":user.id})
+    refresh_token = utils.create_refresh_token(data= {"user_id":user.id})
 
     #store refresh token so it can be checked/ revoked later
     db_token = models.RefreshToken(
