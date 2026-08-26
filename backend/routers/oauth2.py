@@ -35,4 +35,4 @@ def require_admin(current_user:models.DBUser = Depends(get_current_user)):
             status_code = status.HTTP_403_FORBIDDEN,
             details = "Admin access required ",
         )
-    return current_user
+    return current_user 
