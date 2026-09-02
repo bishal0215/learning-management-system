@@ -3,8 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from config import settings
-import database, models
-from fastapi import Depends,HTTPException,status
+
 
 SQLALCHEMY_DATABASE_URL = settings.database_url
 

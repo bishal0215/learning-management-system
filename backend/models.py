@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, TIMESTAMP
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, TIMESTAMP, DateTime, Table
 from database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import expression
@@ -32,7 +32,22 @@ class DBUser(Base):
     password = Column(String, nullable=False)
     is_active = Column(Boolean,default=True)
     is_superuser = Column(Boolean, default=False)
+    bio = Column(String, nullable=True)
 
+post_tags = Table(
+    "post_tags",
+    Base.metadata,
+    Column("post_id",Integer, ForeignKey("posts.id"), primary_key = True),
+    Column("tag_id",Integer, ForeignKey("tags.id"), primary_key = True),
+
+)
+
+class Tag(Base):
+    __tablename__ = "tags"
+    id = Column(Integer, primary_key =True, index=True)
+    name = Column(String, unique = True, index = True, nullable = False)
+    posts = relationship("Post", secondary = post_tags, back_populates ="tags")
+    
 
 #its for posts
 class Post(Base):
@@ -43,7 +58,8 @@ class Post(Base):
     published = Column(Boolean, server_default='True',nullable=False)
     owner_id = Column(Integer, ForeignKey("users.id",ondelete="CASCADE"), nullable=False)
     owner = relationship(DBUser)
-    image_url = Column(String,nullable= True)
+    image_url = Column(String, nullable= True)
+    tags = relationship("Tag", secondary=post_tags, back_populates="posts")
 
 
 class RefreshToken(Base):
