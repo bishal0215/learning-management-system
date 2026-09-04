@@ -83,6 +83,7 @@ class PostResponse(PostBase):
     owner_id:int
     owner:UserOut
     image_url:Optional[str]=None
+    created_at: datetime
     class Config : from_attributes = True
 
 class PostUpdateSchema(BaseModel):

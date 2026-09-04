@@ -60,6 +60,7 @@ class Post(Base):
     owner = relationship(DBUser)
     image_url = Column(String, nullable= True)
     tags = relationship("Tag", secondary=post_tags, back_populates="posts")
+    created_at = Column(TIMESTAMP, server_default=expression.text("CURRENT_TIMESTAMP"),nullable=False)
 
 
 class RefreshToken(Base):
